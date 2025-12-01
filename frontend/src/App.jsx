@@ -7,17 +7,24 @@ import './App.css'
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [currentUser, setCurrentUser] = useState(null)
+  const [isInitialized, setIsInitialized] = useState(false)
 
   // Check if user is already logged in (has token)
   useEffect(() => {
-    const token = getToken()
-    if (token) {
-      // Token exists, but we need username - try to get from localStorage
-      const username = localStorage.getItem('username')
-      if (username) {
-        setCurrentUser(username)
-        setIsLoggedIn(true)
+    try {
+      const token = getToken()
+      if (token) {
+        // Token exists, but we need username - try to get from localStorage
+        const username = localStorage.getItem('username')
+        if (username) {
+          setCurrentUser(username)
+          setIsLoggedIn(true)
+        }
       }
+    } catch (error) {
+      console.error('Error checking login status:', error)
+    } finally {
+      setIsInitialized(true)
     }
   }, [])
 
@@ -33,6 +40,21 @@ function App() {
     setIsLoggedIn(false)
     removeToken()
     localStorage.removeItem('username')
+  }
+
+  if (!isInitialized) {
+    return (
+      <div className="app" style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        minHeight: '100vh',
+        color: 'white',
+        fontSize: '18px'
+      }}>
+        Loading...
+      </div>
+    )
   }
 
   return (

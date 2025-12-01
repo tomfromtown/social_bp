@@ -20,26 +20,35 @@ function PostList({ currentUser }) {
       setError('')
       const data = await postsAPI.getAll()
       
+      // Ensure data is an array
+      if (!Array.isArray(data)) {
+        console.error('Invalid data format:', data)
+        setError('Invalid response from server')
+        setPosts([])
+        return
+      }
+      
       // Transform API response to match component format
       const transformedPosts = data.map(post => ({
         id: post.id,
-        author: post.author,
-        content: post.content,
-        timestamp: formatDate(post.createdAt),
-        likes: post.likeCount,
+        author: post.author || 'Unknown',
+        content: post.content || '',
+        timestamp: post.createdAt ? formatDate(post.createdAt) : 'Unknown time',
+        likes: post.likeCount || 0,
         likedBy: [], // Backend doesn't track who liked, just count
-        comments: post.comments.map(comment => ({
+        comments: Array.isArray(post.comments) ? post.comments.map(comment => ({
           id: comment.id,
-          author: comment.author,
-          content: comment.content,
-          timestamp: formatDate(comment.createdAt)
-        }))
+          author: comment.author || 'Unknown',
+          content: comment.content || '',
+          timestamp: comment.createdAt ? formatDate(comment.createdAt) : 'Unknown time'
+        })) : []
       }))
       
       setPosts(transformedPosts)
     } catch (err) {
       setError(err.message || 'Failed to load posts')
       console.error('Error loading posts:', err)
+      setPosts([]) // Set empty array on error
     } finally {
       setLoading(false)
     }
