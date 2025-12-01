@@ -1,73 +1,35 @@
-version: '3.8'
+﻿# Root docker-compose that orchestrates backend and frontend
+# This file references backend/docker-compose.yml and frontend/docker-compose.yml
+# Backend compose includes postgres, frontend compose is standalone
 
 services:
-  postgres:
-    image: postgres:16-alpine
-    container_name: social-media-postgres
-    environment:
-      - POSTGRES_DB=socialmedia
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_INITDB_ARGS=--encoding=UTF8 --locale=en_US.UTF-8
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./backend/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-    networks:
-      - social-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d socialmedia"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
-    restart: unless-stopped
-    command: 
-      - "postgres"
-      - "-c"
-      - "max_connections=200"
-      - "-c"
-      - "shared_buffers=256MB"
-
+  # Reference backend service from backend/docker-compose.yml
   backend:
-    build:
-      context: ./backend
-      dockerfile: SocialMedia.Api/Dockerfile
-    container_name: social-media-api
-    ports:
-      - "5000:80"
-      - "5001:443"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
-      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=socialmedia;Username=postgres;Password=postgres
-      - JwtSettings__SecretKey=YourSuperSecretKeyThatShouldBeAtLeast32CharactersLongForProduction!
-      - JwtSettings__Issuer=SocialMediaApi
-      - JwtSettings__Audience=SocialMediaUsers
-      - JwtSettings__ExpirationInMinutes=60
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - social-network
+    extends:
+      file: ./backend/docker-compose.yml
+      service: backend
 
+  # Reference postgres service from backend/docker-compose.yml
+  postgres:
+    extends:
+      file: ./backend/docker-compose.yml
+      service: postgres
+
+  # Reference frontend service from frontend/docker-compose.yml
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: social-media-frontend
-    ports:
-      - "5173:80"
+    extends:
+      file: ./frontend/docker-compose.yml
+      service: frontend
     depends_on:
       - backend
-    networks:
-      - social-network
 
+# Shared volumes (defined in backend compose, referenced here)
 volumes:
   postgres_data:
+    external: false
 
+# Shared network
 networks:
   social-network:
     driver: bridge
-
+    external: false
