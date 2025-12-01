@@ -1,0 +1,25 @@
+meta {
+  name: post /api/posts/:postId/Comments
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/posts/:postId/Comments
+  body: json
+  auth: none
+}
+
+params:path {
+  postId: 
+}
+
+headers {
+  Authorization: {{apiKey}}
+}
+
+body:json {
+  {
+    "content": ""
+  }
+}

@@ -1,0 +1,19 @@
+meta {
+  name: get /api/Posts
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/Posts
+  body: none
+  auth: bearer
+}
+
+headers {
+  Authorization: {{apiKey}}
+}
+
+auth:bearer {
+  token: {{bearerToken}}
+}
