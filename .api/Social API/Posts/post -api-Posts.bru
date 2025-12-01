@@ -7,7 +7,7 @@ meta {
 post {
   url: {{baseUrl}}/api/Posts
   body: json
-  auth: none
+  auth: inherit
 }
 
 headers {
@@ -16,6 +16,6 @@ headers {
 
 body:json {
   {
-    "content": ""
+    "content": "New post"
   }
 }

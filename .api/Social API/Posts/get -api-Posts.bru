@@ -7,13 +7,9 @@ meta {
 get {
   url: {{baseUrl}}/api/Posts
   body: none
-  auth: bearer
+  auth: inherit
 }
 
 headers {
   Authorization: {{apiKey}}
-}
-
-auth:bearer {
-  token: {{bearerToken}}
 }
