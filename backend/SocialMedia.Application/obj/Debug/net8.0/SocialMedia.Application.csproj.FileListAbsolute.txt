@@ -1,0 +1,16 @@
+C:\projects\social\backend\SocialMedia.Application\bin\Debug\net8.0\SocialMedia.Application.deps.json
+C:\projects\social\backend\SocialMedia.Application\bin\Debug\net8.0\SocialMedia.Application.dll
+C:\projects\social\backend\SocialMedia.Application\bin\Debug\net8.0\SocialMedia.Application.pdb
+C:\projects\social\backend\SocialMedia.Application\bin\Debug\net8.0\SocialMedia.Domain.dll
+C:\projects\social\backend\SocialMedia.Application\bin\Debug\net8.0\SocialMedia.Domain.pdb
+C:\projects\social\backend\SocialMedia.Application\obj\Debug\net8.0\SocialMedia.Application.csproj.AssemblyReference.cache
+C:\projects\social\backend\SocialMedia.Application\obj\Debug\net8.0\SocialMedia.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\projects\social\backend\SocialMedia.Application\obj\Debug\net8.0\SocialMedia.Application.AssemblyInfoInputs.cache
+C:\projects\social\backend\SocialMedia.Application\obj\Debug\net8.0\SocialMedia.Application.AssemblyInfo.cs
+C:\projects\social\backend\SocialMedia.Application\obj\Debug\net8.0\SocialMedia.Application.csproj.CoreCompileInputs.cache
+C:\projects\social\backend\SocialMedia.Application\obj\Debug\net8.0\SocialMedia.Application.sourcelink.json
+C:\projects\social\backend\SocialMedia.Application\obj\Debug\net8.0\SocialMe.92392C20.Up2Date
+C:\projects\social\backend\SocialMedia.Application\obj\Debug\net8.0\SocialMedia.Application.dll
+C:\projects\social\backend\SocialMedia.Application\obj\Debug\net8.0\refint\SocialMedia.Application.dll
+C:\projects\social\backend\SocialMedia.Application\obj\Debug\net8.0\SocialMedia.Application.pdb
+C:\projects\social\backend\SocialMedia.Application\obj\Debug\net8.0\ref\SocialMedia.Application.dll

@@ -1,0 +1,12 @@
+C:\projects\social\backend\SocialMedia.Domain\bin\Debug\net8.0\SocialMedia.Domain.deps.json
+C:\projects\social\backend\SocialMedia.Domain\bin\Debug\net8.0\SocialMedia.Domain.dll
+C:\projects\social\backend\SocialMedia.Domain\bin\Debug\net8.0\SocialMedia.Domain.pdb
+C:\projects\social\backend\SocialMedia.Domain\obj\Debug\net8.0\SocialMedia.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\projects\social\backend\SocialMedia.Domain\obj\Debug\net8.0\SocialMedia.Domain.AssemblyInfoInputs.cache
+C:\projects\social\backend\SocialMedia.Domain\obj\Debug\net8.0\SocialMedia.Domain.AssemblyInfo.cs
+C:\projects\social\backend\SocialMedia.Domain\obj\Debug\net8.0\SocialMedia.Domain.csproj.CoreCompileInputs.cache
+C:\projects\social\backend\SocialMedia.Domain\obj\Debug\net8.0\SocialMedia.Domain.sourcelink.json
+C:\projects\social\backend\SocialMedia.Domain\obj\Debug\net8.0\SocialMedia.Domain.dll
+C:\projects\social\backend\SocialMedia.Domain\obj\Debug\net8.0\refint\SocialMedia.Domain.dll
+C:\projects\social\backend\SocialMedia.Domain\obj\Debug\net8.0\SocialMedia.Domain.pdb
+C:\projects\social\backend\SocialMedia.Domain\obj\Debug\net8.0\ref\SocialMedia.Domain.dll
