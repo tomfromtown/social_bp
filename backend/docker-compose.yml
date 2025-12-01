@@ -32,7 +32,7 @@ services:
 
   backend:
     build:
-      context: ./backend
+      context: .
       dockerfile: SocialMedia.Api/Dockerfile
     container_name: social-media-api
     ports:
@@ -49,18 +49,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    networks:
-      - social-network
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: social-media-frontend
-    ports:
-      - "3000:80"
-    depends_on:
-      - backend
     networks:
       - social-network
 
