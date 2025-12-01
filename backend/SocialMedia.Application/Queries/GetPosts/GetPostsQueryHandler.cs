@@ -21,6 +21,7 @@ public class GetPostsQueryHandler : IRequestHandler<GetPostsQuery, List<PostDto>
             .Include(p => p.Comments)
                 .ThenInclude(c => c.Author)
             .Include(p => p.Likes)
+                .ThenInclude(l => l.User)
             .OrderByDescending(p => p.CreatedAt)
             .ToListAsync(cancellationToken);
 
@@ -31,6 +32,11 @@ public class GetPostsQueryHandler : IRequestHandler<GetPostsQuery, List<PostDto>
             Content = p.Content,
             CreatedAt = p.CreatedAt,
             LikeCount = p.Likes.Count,
+            LikedBy = p.Likes
+                .Select(l => l.User.Username)
+                .ToList(),
+            IsLiked = request.CurrentUserId.HasValue && 
+                      p.Likes.Any(l => l.UserId == request.CurrentUserId.Value),
             Comments = p.Comments
                 .OrderBy(c => c.CreatedAt)
                 .Select(c => new CommentDto

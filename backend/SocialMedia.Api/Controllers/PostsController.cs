@@ -22,7 +22,17 @@ public class PostsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetPosts()
     {
-        var query = new GetPostsQuery();
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        int? userId = null;
+        if (userIdClaim != null && int.TryParse(userIdClaim, out int parsedUserId))
+        {
+            userId = parsedUserId;
+        }
+
+        var query = new GetPostsQuery
+        {
+            CurrentUserId = userId
+        };
         var posts = await _mediator.Send(query);
         return Ok(posts);
     }

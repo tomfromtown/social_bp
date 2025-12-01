@@ -102,3 +102,12 @@ export const commentsAPI = {
   },
 }
 
+// Likes API
+export const likesAPI = {
+  toggle: async (postId) => {
+    return apiRequest(`/posts/${postId}/likes`, {
+      method: 'POST',
+    })
+  },
+}
+

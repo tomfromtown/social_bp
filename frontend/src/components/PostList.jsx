@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Post from './Post'
 import CreatePost from './CreatePost'
-import { postsAPI, commentsAPI } from '../services/api'
+import { postsAPI, commentsAPI, likesAPI } from '../services/api'
 import { formatDate } from '../utils/formatDate'
 import './PostList.css'
 
@@ -35,7 +35,8 @@ function PostList({ currentUser }) {
         content: post.content || '',
         timestamp: post.createdAt ? formatDate(post.createdAt) : 'Unknown time',
         likes: post.likeCount || 0,
-        likedBy: [], // Backend doesn't track who liked, just count
+        likedBy: Array.isArray(post.likedBy) ? post.likedBy : [],
+        isLiked: post.isLiked || false,
         comments: Array.isArray(post.comments) ? post.comments.map(comment => ({
           id: comment.id,
           author: comment.author || 'Unknown',
@@ -54,22 +55,33 @@ function PostList({ currentUser }) {
     }
   }
 
-  const handleLike = (postId) => {
-    // Note: Backend doesn't have like endpoint yet, so this is client-side only
-    // In a real implementation, you'd call an API endpoint here
-    setPosts(posts.map(post => {
-      if (post.id === postId) {
-        const isLiked = post.likedBy.includes(currentUser)
-        return {
-          ...post,
-          likes: isLiked ? post.likes - 1 : post.likes + 1,
-          likedBy: isLiked 
-            ? post.likedBy.filter(user => user !== currentUser)
-            : [...post.likedBy, currentUser]
+  const handleLike = async (postId) => {
+    try {
+      const response = await likesAPI.toggle(postId)
+      
+      // Update the post with the new like status
+      setPosts(posts.map(post => {
+        if (post.id === postId) {
+          const newIsLiked = response.isLiked
+          const wasLiked = post.isLiked || false
+          
+          return {
+            ...post,
+            isLiked: newIsLiked,
+            likes: newIsLiked 
+              ? (wasLiked ? post.likes : post.likes + 1)
+              : (wasLiked ? post.likes - 1 : post.likes),
+            likedBy: newIsLiked
+              ? (post.likedBy.includes(currentUser) ? post.likedBy : [...post.likedBy, currentUser])
+              : post.likedBy.filter(user => user !== currentUser)
+          }
         }
-      }
-      return post
-    }))
+        return post
+      }))
+    } catch (err) {
+      console.error('Error toggling like:', err)
+      alert('Failed to toggle like: ' + (err.message || 'Unknown error'))
+    }
   }
 
   const handleAddComment = async (postId, commentText) => {

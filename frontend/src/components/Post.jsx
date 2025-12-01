@@ -3,7 +3,7 @@ import CommentSection from './CommentSection'
 import './Post.css'
 
 function Post({ post, currentUser, onLike, onAddComment }) {
-  const isLiked = post.likedBy.includes(currentUser)
+  const isLiked = post.isLiked !== undefined ? post.isLiked : post.likedBy.includes(currentUser)
 
   const handleLikeClick = () => {
     onLike(post.id)
