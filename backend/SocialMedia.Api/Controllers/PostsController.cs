@@ -10,15 +10,8 @@ namespace SocialMedia.Api.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class PostsController : ControllerBase
+public class PostsController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public PostsController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
     [HttpGet]
     public async Task<IActionResult> GetPosts()
     {
@@ -33,7 +26,7 @@ public class PostsController : ControllerBase
         {
             CurrentUserId = userId
         };
-        var posts = await _mediator.Send(query);
+        var posts = await mediator.Send(query);
         return Ok(posts);
     }
 
@@ -57,7 +50,7 @@ public class PostsController : ControllerBase
             Content = request.Content
         };
 
-        var post = await _mediator.Send(command);
+        var post = await mediator.Send(command);
 
         if (post == null)
         {

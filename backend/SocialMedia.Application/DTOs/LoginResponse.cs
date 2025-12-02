@@ -1,8 +1,8 @@
 namespace SocialMedia.Application.DTOs;
 
-public class LoginResponse
+public record LoginResponse
 {
-    public string Token { get; set; } = string.Empty;
-    public string Username { get; set; } = string.Empty;
+    public string Token { get; init; } = string.Empty;
+    public string Username { get; init; } = string.Empty;
 }
 

@@ -9,15 +9,8 @@ namespace SocialMedia.Api.Controllers;
 [ApiController]
 [Route("api/posts/{postId}/likes")]
 [Authorize]
-public class LikesController : ControllerBase
+public class LikesController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public LikesController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
     [HttpPost]
     public async Task<IActionResult> ToggleLike(int postId)
     {
@@ -35,7 +28,7 @@ public class LikesController : ControllerBase
 
         try
         {
-            var isLiked = await _mediator.Send(command);
+            var isLiked = await mediator.Send(command);
             return Ok(new { isLiked, message = isLiked ? "Post liked" : "Post unliked" });
         }
         catch (InvalidOperationException ex)

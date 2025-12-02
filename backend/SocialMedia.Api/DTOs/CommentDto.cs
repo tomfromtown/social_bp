@@ -1,10 +1,10 @@
 namespace SocialMedia.Api.DTOs;
 
-public class CommentDto
+public record CommentDto
 {
-    public int Id { get; set; }
-    public string Author { get; set; } = string.Empty;
-    public string Content { get; set; } = string.Empty;
-    public DateTime CreatedAt { get; set; }
+    public int Id { get; init; }
+    public string Author { get; init; } = string.Empty;
+    public string Content { get; init; } = string.Empty;
+    public DateTime CreatedAt { get; init; }
 }
 

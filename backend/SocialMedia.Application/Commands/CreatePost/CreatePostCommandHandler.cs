@@ -17,7 +17,7 @@ public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, PostD
 
     public async Task<PostDto?> Handle(CreatePostCommand request, CancellationToken cancellationToken)
     {
-        var user = await _context.Users.FindAsync(new object[] { request.UserId }, cancellationToken);
+        var user = await _context.Users.FindAsync([request.UserId], cancellationToken);
         if (user == null)
         {
             return null;

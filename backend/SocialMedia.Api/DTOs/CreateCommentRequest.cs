@@ -2,10 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SocialMedia.Api.DTOs;
 
-public class CreateCommentRequest
+public record CreateCommentRequest
 {
     [Required]
     [MaxLength(500)]
-    public string Content { get; set; } = string.Empty;
+    public string Content { get; init; } = string.Empty;
 }
 

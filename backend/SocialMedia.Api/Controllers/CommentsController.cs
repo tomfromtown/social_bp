@@ -9,15 +9,8 @@ namespace SocialMedia.Api.Controllers;
 [ApiController]
 [Route("api/posts/{postId}/[controller]")]
 [Authorize]
-public class CommentsController : ControllerBase
+public class CommentsController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public CommentsController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
     [HttpPost]
     public async Task<IActionResult> AddComment(int postId, [FromBody] CreateCommentRequest request)
     {
@@ -39,7 +32,7 @@ public class CommentsController : ControllerBase
             Content = request.Content
         };
 
-        var comment = await _mediator.Send(command);
+        var comment = await mediator.Send(command);
 
         if (comment == null)
         {
