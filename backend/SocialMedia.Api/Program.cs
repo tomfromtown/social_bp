@@ -13,6 +13,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+// CORS configuration
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173", "http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Social Media API", Version = "v1" });
@@ -93,8 +105,22 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    // Only redirect to HTTPS in production
+    app.UseHttpsRedirection();
+}
 
-app.UseHttpsRedirection();
+app.UseCors("AllowFrontend");
+
+// Disable caching for API responses
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Append("Cache-Control", "no-cache, no-store, must-revalidate");
+    context.Response.Headers.Append("Pragma", "no-cache");
+    context.Response.Headers.Append("Expires", "0");
+    await next();
+});
 
 app.UseAuthentication();
 app.UseAuthorization();
