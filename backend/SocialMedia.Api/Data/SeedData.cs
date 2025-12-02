@@ -1,5 +1,3 @@
-// using SocialMedia.Api.Models;
-using BCrypt.Net;
 using SocialMedia.Domain.Entities;
 using SocialMedia.Infrastructure.Data;
 

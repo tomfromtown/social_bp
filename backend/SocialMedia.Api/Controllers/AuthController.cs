@@ -1,7 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SocialMedia.Application.Commands.Login;
-using SocialMedia.Application.DTOs;
 
 namespace SocialMedia.Api.Controllers;
 

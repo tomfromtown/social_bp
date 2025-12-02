@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SocialMedia.Application.Interfaces;
 using SocialMedia.Domain.Entities;
-using BCrypt.Net;
 
 namespace SocialMedia.Infrastructure.Data;
 

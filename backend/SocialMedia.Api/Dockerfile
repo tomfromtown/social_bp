@@ -2,8 +2,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-RUN ls -la
-
 # Copy solution/project files and restore dependencies
 COPY ["SocialMedia.Api/SocialMedia.Api.csproj", "SocialMedia.Api/"]
 #COPY ["SocialMedia.Application/SocialMedia.Application.csproj", "SocialMedia.Application/"]

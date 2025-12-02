@@ -8,24 +8,15 @@ using SocialMedia.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using BCrypt.Net;
 
 namespace SocialMedia.Application.Commands.Login;
 
-public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse?>
+public class LoginCommandHandler(IApplicationDbContext context, IConfiguration configuration)
+    : IRequestHandler<LoginCommand, LoginResponse?>
 {
-    private readonly IApplicationDbContext _context;
-    private readonly IConfiguration _configuration;
-
-    public LoginCommandHandler(IApplicationDbContext context, IConfiguration configuration)
-    {
-        _context = context;
-        _configuration = configuration;
-    }
-
     public async Task<LoginResponse?> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        var user = await _context.Users
+        var user = await context.Users
             .FirstOrDefaultAsync(u => u.Username == request.Username, cancellationToken);
 
         if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
@@ -44,7 +35,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse?>
 
     private string GenerateJwtToken(User user)
     {
-        var jwtSettings = _configuration.GetSection("JwtSettings");
+        var jwtSettings = configuration.GetSection("JwtSettings");
         var secretKey = jwtSettings["SecretKey"] ?? "YourSuperSecretKeyThatShouldBeAtLeast32CharactersLong!";
         var issuer = jwtSettings["Issuer"] ?? "SocialMediaApi";
         var audience = jwtSettings["Audience"] ?? "SocialMediaUsers";
