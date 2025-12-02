@@ -1,6 +1,6 @@
 ﻿# The Social Media Site
 
-A full-stack social media application built with React and .NET Core, following a modular-monolithic architecture with CQRS pattern.
+A full-stack social media application built with React and .NET Core, following a modular-monolithic architecture with CQRS pattern. Please take a look the development summary at the end as well.
 
 ##  Architecture
 
@@ -326,6 +326,79 @@ Migrations are automatically applied when the backend container starts. If you n
 - Docker & Docker Compose
 - Nginx (for frontend production)
 - PostgreSQL 16
+
+##  Development Summary
+
+### Framework Choice
+
+I created the application for **.NET Core framework**, choosing **.NET 8** due to its long-term support (LTS).
+
+### Design Pattern: CQRS
+
+The main design pattern is based on **CQRS (Command Query Responsibility Segregation)**.
+
+**Why CQRS?**
+I needed to create an application that is scalable. CQRS enables splitting functionality for horizontal scalability when needed.
+
+**Implementation:**
+- Used **MediatR** for the inbox/outbox pattern
+- Currently implemented in-memory, but can be replaced with messaging systems like Kafka, ServiceBus, RabbitMQ, etc.
+- This allows multiple instances to pick up handled items as needed
+
+**Scalability Options:**
+- Can be load-balanced on-premises as well as in the cloud
+- Horizontal scaling is straightforward with the CQRS architecture
+
+### Development Approach
+
+**Time Investment:**
+Approximately 2 workdays were spent on this project.
+
+**AI Assistance:**
+- Used AI assistance iteratively, not "vibe coding"
+- Made sure the AI assistant worked for me, not just accepting changes without review
+- All code was reviewed and validated
+
+**Development Process:**
+1. Started with a skeleton UI application (requested from AI)
+2. Created .NET Core skeleton manually
+3. Planned domain objects (prefer Domain-Driven Development, but not in all cases)
+4. Iterative development with AI assistance for:
+   - Building skeletons
+   - Adding test data
+   - Fine-tuning request/response classes
+   - Repetitive and replaceable tasks
+
+**Tools Used:**
+- JetBrains Rider
+- Cursor
+- SonarLint
+
+**AI Assistance Philosophy:**
+- AI is for assistance, not for "vibe coding" in a professional environment
+- Full code review is essential
+- Knowing principles and reviewing is crucial
+- Did not provide instruction/architecture files as guidelines to Cursor
+- Used basic instructions and manual creation to guide development
+
+### Database & Entity Framework
+
+**PostgreSQL Choice:**
+- Chose PostgreSQL instead of SQL Server to demonstrate that Npgsql is a viable option for Entity Framework
+- (Note: If only technical approach matters, SQL Server would be preferred, but PostgreSQL was chosen for demonstration purposes)
+
+**Database Setup:**
+- Seeding test data happens at project startup
+- Migrations happen automatically within Docker
+
+### Future Considerations
+
+If continuing work on this project, I would consider:
+
+- **MediatR Distribution**: Implementing MediatR distribution in a generic way (different implementation; needs business needs and costs analysis)
+- **Integration Tests**: Adding integration tests for end-to-end scenarios
+- **Docker SSL Configuration**: Configuring Docker for proper SSL environment (not done due to uncertainty about running environment and certificate trust configuration)
+- **Secrets Management**: Moving all secrets to secure storage (SCV or other safe storage). Currently stored in code only for local running and demonstration purposes
 
 ##  License
 
